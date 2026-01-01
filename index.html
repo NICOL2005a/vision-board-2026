@@ -8,51 +8,148 @@
 
 <body>
 
-  <!-- LOGIN -->
-  <div id="login">
-    <h1> Vision Board 2026</h1>
-    <input type="password" id="password" placeholder="Contraseña">
-    <button onclick="checkPassword()">Entrar</button>
-  </div>
+<!-- LOGIN -->
+<div id="login">
+  <h1>💖 Vision Board 2026</h1>
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="checkPassword()">Entrar</button>
+</div>
 
-  <!-- CONTENIDO -->
-  <div id="content" style="display:none;">
+<!-- CONTENIDO -->
+<div id="content" style="display:none;">
 
-    <h1>Vision Board 2026</h1>
-    <p class="subtitle">Este será mi año </p>
+  <h1>Vision Board 2026</h1>
+  <p class="subtitle">Este será mi año ✨</p>
 
-    <section class="category">
-      <h2> Academic</h2>
-      <button onclick="selectCategory('academic')">+ Agregar</button>
-      <div class="grid" id="academic"></div>
-    </section>
+  <section class="category">
+    <h2>📚 Academic</h2>
+    <button onclick="selectCategory('academic')">+ Agregar</button>
+    <div class="grid" id="academic"></div>
+  </section>
 
-    <section class="category">
-      <h2> Moments</h2>
-      <button onclick="selectCategory('moments')">+ Agregar</button>
-      <div class="grid" id="moments"></div>
-    </section>
+  <section class="category">
+    <h2>✨ Moments</h2>
+    <button onclick="selectCategory('moments')">+ Agregar</button>
+    <div class="grid" id="moments"></div>
+  </section>
 
-    <section class="category">
-      <h2> Wanna Get</h2>
-      <button onclick="selectCategory('wannaget')">+ Agregar</button>
-      <div class="grid" id="wannaget"></div>
-    </section>
+  <section class="category">
+    <h2>🎯 Wanna Get</h2>
+    <button onclick="selectCategory('wannaget')">+ Agregar</button>
+    <div class="grid" id="wannaget"></div>
+  </section>
 
-    <section class="category">
-      <h2> Habits</h2>
-      <button onclick="selectCategory('habits')">+ Agregar</button>
-      <div class="grid" id="habits"></div>
-    </section>
+  <section class="category">
+    <h2>🌱 Habits</h2>
+    <button onclick="selectCategory('habits')">+ Agregar</button>
+    <div class="grid" id="habits"></div>
+  </section>
 
-    <input type="file" id="fileInput" accept="image/*" hidden>
-  </div>
+  <input type="file" id="fileInput" accept="image/*" hidden>
+</div>
 
-  <!-- CORAZONES -->
-  <div id="effects"></div>
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    listAll,
+    deleteObject
+  } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
 
-  <!-- FIREBASE + APP -->
-  <script type="module" src="app.js"></script>
+  // 🔐 LOGIN
+  window.checkPassword = function () {
+    if (document.getElementById("password").value === "vision2026") {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    } else {
+      alert("Contraseña incorrecta 💔");
+    }
+  };
+
+  // 🔥 FIREBASE CONFIG (TUYA)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBzcxSPLO6oqeY2_nbzemFhEjNEDLBbsJs",
+    authDomain: "vision-board-2026-2d04e.firebaseapp.com",
+    projectId: "vision-board-2026-2d04e",
+    storageBucket: "vision-board-2026-2d04e.firebasestorage.app",
+    messagingSenderId: "737892135160",
+    appId: "1:737892135160:web:80d08fff34f3f9be850b0d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  let currentCategory = "";
+
+  // 📂 Seleccionar categoría
+  window.selectCategory = function (cat) {
+    currentCategory = cat;
+    document.getElementById("fileInput").click();
+  };
+
+  // 📤 Subir imagen
+  document.getElementById("fileInput").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const path = `${currentCategory}/${Date.now()}-${file.name}`;
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+
+    addImage(currentCategory, url, path);
+    e.target.value = "";
+  });
+
+  // 🖼️ Mostrar imagen
+  function addImage(category, url, path) {
+    const card = document.createElement("div");
+    card.className = "photo-card";
+
+    const img = document.createElement("img");
+    img.src = url;
+
+    const del = document.createElement("button");
+    del.innerText = "✖";
+    del.className = "delete-btn";
+    del.onclick = async () => {
+      await deleteObject(ref(storage, path));
+      card.remove();
+    };
+
+    card.appendChild(img);
+    card.appendChild(del);
+    document.getElementById(category).appendChild(card);
+  }
+
+  // 🔁 Cargar imágenes al abrir
+  async function load(cat) {
+    const listRef = ref(storage, cat);
+    const res = await listAll(listRef);
+
+    for (const item of res.items) {
+      const url = await getDownloadURL(item);
+      addImage(cat, url, item.fullPath);
+    }
+  }
+
+  ["academic", "moments", "wannaget", "habits"].forEach(load);
+
+  // 💖 Animaciones
+  setInterval(() => {
+    const el = document.createElement("div");
+    el.className = "heart";
+    el.innerText = Math.random() > 0.5 ? "💖" : "✨";
+    el.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }, 900);
+</script>
+
 </body>
 </html>
-
