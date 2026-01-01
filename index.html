@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vision Board 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="vision">
+
+  <button class="crown-btn" onclick="location.href='achievements.html'">👑</button>
+
+  <h1>Vision Board 2026</h1>
+  <p class="subtitle">Este será mi año, quiera o no</p>
+
+  <section class="category">
+    <h2>📚 Academic</h2>
+    <button onclick="addPhoto('academic')">+ Agregar foto</button>
+    <div class="grid" id="academic"></div>
+  </section>
+
+  <section class="category">
+    <h2>✨ Moments</h2>
+    <button onclick="addPhoto('moments')">+ Agregar foto</button>
+    <div class="grid" id="moments"></div>
+  </section>
+
+  <section class="category">
+    <h2>🎯 Wanna Get</h2>
+    <button onclick="addPhoto('wannaget')">+ Agregar foto</button>
+    <div class="grid" id="wannaget"></div>
+  </section>
+
+  <section class="category">
+    <h2>🌱 Habits</h2>
+    <button onclick="addPhoto('habits')">+ Agregar foto</button>
+    <div class="grid" id="habits"></div>
+  </section>
+
+  <input type="file" id="fileInput" accept="image/*" hidden>
+
+  <script src="app.js"></script>
+</body>
+</html>
