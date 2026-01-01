@@ -1,62 +1,104 @@
 body {
-  font-family: Georgia, serif;
   margin: 0;
-  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background: #f7e6ea;
+  color: #5a3e4a;
 }
 
-.vision {
-  background: #E8DCC4;
-}
-
-.achievements {
-  background: #7A8B6E;
-  color: white;
-}
-
-h1 {
+h1, h2 {
   text-align: center;
-  letter-spacing: 5px;
 }
 
 .subtitle {
   text-align: center;
-  font-style: italic;
+  margin-bottom: 30px;
+}
+
+#login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#login input {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+#login button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: pink;
+  cursor: pointer;
 }
 
 .category {
-  margin: 40px 0;
+  margin: 40px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.grid img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-button {
-  padding: 10px 20px;
+.category button {
+  background: #ffd1dc;
   border: none;
+  padding: 8px 15px;
   border-radius: 20px;
   cursor: pointer;
 }
 
-.crown-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  font-size: 30px;
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
 }
 
-.back-btn {
+.photo-card {
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: rotate(-2deg);
+  position: relative;
+}
+
+.photo-card:nth-child(even) {
+  transform: rotate(2deg);
+}
+
+.photo-card img {
+  width: 180px;
+  border-radius: 10px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: pink;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Animaciones */
+.heart {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  bottom: -20px;
+  font-size: 22px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
 }
