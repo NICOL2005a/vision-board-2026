@@ -11,11 +11,11 @@ import {
 /* 🔐 LOGIN */
 window.checkPassword = function () {
   const pass = document.getElementById("password").value;
-  if (pass === "vision2026") {
+  if (pass === "NEWWOMAN") {
     document.getElementById("login").style.display = "none";
     document.getElementById("content").style.display = "block";
   } else {
-    alert("Contraseña incorrecta 💔");
+    alert("Contraseña incorrecta :P");
   }
 };
 
@@ -97,3 +97,4 @@ setInterval(() => {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 6000);
 }, 800);
+
