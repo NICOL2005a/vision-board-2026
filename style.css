@@ -37,6 +37,20 @@ h1, h2 {
   cursor: pointer;
 }
 
+.crown-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  background: #ffd1dc;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
+  z-index: 999;
+}
+
 .category {
   margin: 40px;
 }
@@ -102,3 +116,4 @@ h1, h2 {
     opacity: 0;
   }
 }
+
